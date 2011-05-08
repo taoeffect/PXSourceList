@@ -11,6 +11,7 @@ This fork was created to demonstrate the [TERecord category as explained in this
 Before you can compile, after checking the repo out, you'll need to run:
 
 	git submodule init
+	git submodule update
 
 #License
 
