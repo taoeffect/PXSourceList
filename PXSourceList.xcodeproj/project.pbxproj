@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		186BA9AB13771EF000D41DAF /* NSDictionary+TERecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 186BA9AA13771EF000D41DAF /* NSDictionary+TERecord.m */; };
 		4CC5EA2D12DC8205001F282E /* PXSourceList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC5EA2A12DC81ED001F282E /* PXSourceList.framework */; };
 		4CC5EA3212DC8224001F282E /* PXSourceList.m in Sources */ = {isa = PBXBuildFile; fileRef = D2EA6EC110D9205A00402758 /* PXSourceList.m */; };
 		4CC5EA4C12DC8339001F282E /* PXSourceList.h in Headers */ = {isa = PBXBuildFile; fileRef = D2EA6EC010D9205A00402758 /* PXSourceList.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,7 +24,6 @@
 		D2456CAD10F8F7F500B8045C /* playlist.png in Resources */ = {isa = PBXBuildFile; fileRef = D2456CA710F8F7F500B8045C /* playlist.png */; };
 		D2456CAE10F8F7F500B8045C /* playlistFolder.png in Resources */ = {isa = PBXBuildFile; fileRef = D2456CA810F8F7F500B8045C /* playlistFolder.png */; };
 		D2456CAF10F8F7F500B8045C /* podcasts.png in Resources */ = {isa = PBXBuildFile; fileRef = D2456CA910F8F7F500B8045C /* podcasts.png */; };
-		D2456D8C10F90D3B00B8045C /* SourceListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D2456D8B10F90D3B00B8045C /* SourceListItem.m */; };
 		D265C2D710E3814B00A1E824 /* TODO.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D265C2D610E3814B00A1E824 /* TODO.rtf */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +41,8 @@
 		089C165DFE840E0CC02AAC07 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = Resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		186BA9A913771EF000D41DAF /* NSDictionary+TERecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+TERecord.h"; sourceTree = "<group>"; };
+		186BA9AA13771EF000D41DAF /* NSDictionary+TERecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TERecord.m"; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* PXSourceList_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PXSourceList_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -52,14 +54,12 @@
 		D205EDEF10F7A609004C6545 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/MainMenu.xib; sourceTree = "<group>"; };
 		D205EDF510F7A693004C6545 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		D205EDF610F7A693004C6545 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
-		D205EE7D10F7B5AB004C6545 /* SourceListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceListItem.h; path = Classes/SourceListItem.h; sourceTree = "<group>"; };
 		D2456CA410F8F7F500B8045C /* audiobooks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = audiobooks.png; path = Resources/audiobooks.png; sourceTree = "<group>"; };
 		D2456CA510F8F7F500B8045C /* movies.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = movies.png; path = Resources/movies.png; sourceTree = "<group>"; };
 		D2456CA610F8F7F500B8045C /* music.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = music.png; path = Resources/music.png; sourceTree = "<group>"; };
 		D2456CA710F8F7F500B8045C /* playlist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playlist.png; path = Resources/playlist.png; sourceTree = "<group>"; };
 		D2456CA810F8F7F500B8045C /* playlistFolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playlistFolder.png; path = Resources/playlistFolder.png; sourceTree = "<group>"; };
 		D2456CA910F8F7F500B8045C /* podcasts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = podcasts.png; path = Resources/podcasts.png; sourceTree = "<group>"; };
-		D2456D8B10F90D3B00B8045C /* SourceListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SourceListItem.m; path = Classes/SourceListItem.m; sourceTree = "<group>"; };
 		D265C2D610E3814B00A1E824 /* TODO.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = TODO.rtf; sourceTree = "<group>"; };
 		D2EA6EC010D9205A00402758 /* PXSourceList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PXSourceList.h; path = Classes/PXSourceList.h; sourceTree = "<group>"; };
 		D2EA6EC110D9205A00402758 /* PXSourceList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PXSourceList.m; path = Classes/PXSourceList.m; sourceTree = "<group>"; };
@@ -92,8 +92,6 @@
 			children = (
 				D205EDF510F7A693004C6545 /* AppDelegate.h */,
 				D205EDF610F7A693004C6545 /* AppDelegate.m */,
-				D205EE7D10F7B5AB004C6545 /* SourceListItem.h */,
-				D2456D8B10F90D3B00B8045C /* SourceListItem.m */,
 				D2EA702910D92EB300402758 /* PXSourceList */,
 			);
 			name = Classes;
@@ -117,6 +115,15 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
+		186BA9A813771E8F00D41DAF /* TERecord */ = {
+			isa = PBXGroup;
+			children = (
+				186BA9A913771EF000D41DAF /* NSDictionary+TERecord.h */,
+				186BA9AA13771EF000D41DAF /* NSDictionary+TERecord.m */,
+			);
+			name = TERecord;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +138,7 @@
 			children = (
 				D265C2D610E3814B00A1E824 /* TODO.rtf */,
 				D205EDDD10F7A1EE004C6545 /* README.markdown */,
+				186BA9A813771E8F00D41DAF /* TERecord */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -253,6 +261,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "PXSourceList" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -311,7 +320,7 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				D205EDF710F7A693004C6545 /* AppDelegate.m in Sources */,
-				D2456D8C10F90D3B00B8045C /* SourceListItem.m in Sources */,
+				186BA9AB13771EF000D41DAF /* NSDictionary+TERecord.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

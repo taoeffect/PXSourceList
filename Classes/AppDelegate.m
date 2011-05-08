@@ -7,7 +7,19 @@
 //
 
 #import "AppDelegate.h"
-#import "SourceListItem.h"
+#import "NSDictionary+TERecord.h"
+
+#define NSARY(...)	[NSMutableArray arrayWithObjects:__VA_ARGS__, nil]
+#define NSINT(_n)	[NSNumber numberWithInt:_n]
+#define NSIMG(_n)	[NSImage imageNamed:_n]
+
+@protocol SourceListItem
+@property (nonatomic, retain) NSString *title;
+@property (nonatomic, retain) NSString *identifier;
+@property (nonatomic, retain) NSNumber *type;
+@property (nonatomic, retain) NSImage *icon;
+@property (nonatomic, retain) NSMutableArray *children;
+@end
 
 @implementation AppDelegate
 
@@ -18,132 +30,98 @@
 {
 	[selectedItemLabel setStringValue:@"(none)"];
 	
-	sourceListItems = [[NSMutableArray alloc] init];
-	
-	//Set up the "Library" parent item and children
-	SourceListItem *libraryItem = [SourceListItem itemWithTitle:@"LIBRARY" identifier:@"library"];
-	SourceListItem *musicItem = [SourceListItem itemWithTitle:@"Music" identifier:@"music"];
-	[musicItem setIcon:[NSImage imageNamed:@"music.png"]];
-	SourceListItem *moviesItem = [SourceListItem itemWithTitle:@"Movies" identifier:@"movies"];
-	[moviesItem setIcon:[NSImage imageNamed:@"movies.png"]];
-	SourceListItem *podcastsItem = [SourceListItem itemWithTitle:@"Podcasts" identifier:@"podcasts"];
-	[podcastsItem setIcon:[NSImage imageNamed:@"podcasts.png"]];
-	[podcastsItem setBadgeValue:10];
-	SourceListItem *audiobooksItem = [SourceListItem itemWithTitle:@"Audiobooks" identifier:@"audiobooks"];
-	[audiobooksItem setIcon:[NSImage imageNamed:@"audiobooks.png"]];
-	[libraryItem setChildren:[NSArray arrayWithObjects:musicItem, moviesItem, podcastsItem,
-							  audiobooksItem, nil]];
-	
-	//Set up the "Playlists" parent item and children
-	SourceListItem *playlistsItem = [SourceListItem itemWithTitle:@"PLAYLISTS" identifier:@"playlists"];
-	SourceListItem *playlist1Item = [SourceListItem itemWithTitle:@"Playlist1" identifier:@"playlist1"];
-	
-	//Create a second-level group to demonstrate
-	SourceListItem *playlist2Item = [SourceListItem itemWithTitle:@"Playlist2" identifier:@"playlist2"];
-	SourceListItem *playlist3Item = [SourceListItem itemWithTitle:@"Playlist3" identifier:@"playlist3"];
-	[playlist1Item setIcon:[NSImage imageNamed:@"playlist.png"]];
-	[playlist2Item setIcon:[NSImage imageNamed:@"playlist.png"]];
-	[playlist3Item setIcon:[NSImage imageNamed:@"playlist.png"]];
-	
-	SourceListItem *playlistGroup = [SourceListItem itemWithTitle:@"Playlist Group" identifier:@"playlistgroup"];
-	SourceListItem *playlistGroupItem = [SourceListItem itemWithTitle:@"Child Playlist" identifier:@"childplaylist"];
-	[playlistGroup setIcon:[NSImage imageNamed:@"playlistFolder.png"]];
-	[playlistGroupItem setIcon:[NSImage imageNamed:@"playlist.png"]];
-	[playlistGroup setChildren:[NSArray arrayWithObject:playlistGroupItem]];
-	
-	[playlistsItem setChildren:[NSArray arrayWithObjects:playlist1Item, playlistGroup,playlist2Item,
-								playlist3Item, nil]];
-	
-	[sourceListItems addObject:libraryItem];
-	[sourceListItems addObject:playlistsItem];
-	
+	sourceListItems = [[NSMutableArray alloc] initWithObjects:
+					   _MD(@"title", @"LIBRARY",
+						   @"identifier", @"library",
+						   @"children",
+						   NSARY(_MD(@"title", @"Music",
+									 @"identifier", @"music",
+									 @"icon", NSIMG(@"music")),
+								 _MD(@"title", @"Movies",
+									 @"identifier", @"movies",
+									 @"icon", NSIMG(@"movies")),
+								 _MD(@"title", @"Podcasts",
+									 @"identifier", @"podcasts",
+									 @"icon", NSIMG(@"podcasts")),
+								 _MD(@"title", @"Audiobooks",
+									 @"identifier", @"audiobooks",
+									 @"icon", NSIMG(@"audiobooks")))),
+					   _MD(@"title", @"PLAYLISTS",
+						   @"identifier", @"playlists",
+						   @"children",
+						   NSARY(_MD(@"title", @"Playlist1",
+									 @"identifier", @"playlist1",
+									 @"icon", NSIMG(@"playlist")),
+								 _MD(@"title", @"Playlist Group",
+									 @"identifier", @"playlistgroup",
+									 @"icon", NSIMG(@"playlistFolder"),
+									 @"children",
+									 NSARY(_MD(@"title", @"Child Playlist",
+											   @"identifier", @"childplaylist",
+											   @"icon", NSIMG(@"playlist")))),
+								 _MD(@"title", @"Playlist1",
+									 @"identifier", @"playlist1",
+									 @"icon", NSIMG(@"playlist")),
+								 _MD(@"title", @"Playlist1",
+									 @"identifier", @"playlist1",
+									 @"icon", NSIMG(@"playlist")))),
+					   nil];
 	[sourceList reloadData];
 }
 
 - (void)dealloc
 {
 	[sourceListItems release];
-	
 	[super dealloc];
 }
 
 #pragma mark -
 #pragma mark Source List Data Source Methods
 
-- (NSUInteger)sourceList:(PXSourceList*)sourceList numberOfChildrenOfItem:(id)item
+- (NSUInteger)sourceList:(PXSourceList*)sourceList numberOfChildrenOfItem:(id<SourceListItem>)item
 {
-	//Works the same way as the NSOutlineView data source: `nil` means a parent item
-	if(item==nil) {
-		return [sourceListItems count];
-	}
-	else {
-		return [[item children] count];
-	}
+	return item ? [item.children count] : [sourceListItems count];
+}
+
+- (id)sourceList:(PXSourceList*)aSourceList child:(NSUInteger)index ofItem:(id<SourceListItem>)item
+{
+	return item ? [item.children objectAtIndex:index] : [sourceListItems objectAtIndex:index];
+}
+
+- (id)sourceList:(PXSourceList*)aSourceList objectValueForItem:(id<SourceListItem>)item
+{
+	return item.title;
 }
 
 
-- (id)sourceList:(PXSourceList*)aSourceList child:(NSUInteger)index ofItem:(id)item
+- (void)sourceList:(PXSourceList*)aSourceList setObjectValue:(id)object forItem:(id<SourceListItem>)item
 {
-	//Works the same way as the NSOutlineView data source: `nil` means a parent item
-	if(item==nil) {
-		return [sourceListItems objectAtIndex:index];
-	}
-	else {
-		return [[item children] objectAtIndex:index];
-	}
+	item.title = object;
 }
 
-
-- (id)sourceList:(PXSourceList*)aSourceList objectValueForItem:(id)item
+- (BOOL)sourceList:(PXSourceList*)aSourceList isItemExpandable:(id<SourceListItem>)item
 {
-	return [item title];
+	return [item.children count] > 0;
 }
 
-
-- (void)sourceList:(PXSourceList*)aSourceList setObjectValue:(id)object forItem:(id)item
+- (BOOL)sourceList:(PXSourceList*)aSourceList itemHasIcon:(id<SourceListItem>)item
 {
-	[item setTitle:object];
+	return !!item.icon;
 }
 
-
-- (BOOL)sourceList:(PXSourceList*)aSourceList isItemExpandable:(id)item
+- (NSImage*)sourceList:(PXSourceList*)aSourceList iconForItem:(id<SourceListItem>)item
 {
-	return [item hasChildren];
+	return item.icon;
 }
 
-
-- (BOOL)sourceList:(PXSourceList*)aSourceList itemHasBadge:(id)item
-{
-	return [item hasBadge];
-}
-
-
-- (NSInteger)sourceList:(PXSourceList*)aSourceList badgeValueForItem:(id)item
-{
-	return [item badgeValue];
-}
-
-
-- (BOOL)sourceList:(PXSourceList*)aSourceList itemHasIcon:(id)item
-{
-	return [item hasIcon];
-}
-
-
-- (NSImage*)sourceList:(PXSourceList*)aSourceList iconForItem:(id)item
-{
-	return [item icon];
-}
-
-- (NSMenu*)sourceList:(PXSourceList*)aSourceList menuForEvent:(NSEvent*)theEvent item:(id)item
+- (NSMenu*)sourceList:(PXSourceList*)aSourceList menuForEvent:(NSEvent*)theEvent item:(id<SourceListItem>)item
 {
 	if ([theEvent type] == NSRightMouseDown || ([theEvent type] == NSLeftMouseDown && ([theEvent modifierFlags] & NSControlKeyMask) == NSControlKeyMask)) {
 		NSMenu * m = [[NSMenu alloc] init];
-		if (item != nil) {
-			[m addItemWithTitle:[item title] action:nil keyEquivalent:@""];
-		} else {
+		if (item != nil)
+			[m addItemWithTitle:item.title action:nil keyEquivalent:@""];
+		else
 			[m addItemWithTitle:@"clicked outside" action:nil keyEquivalent:@""];
-		}
 		return [m autorelease];
 	}
 	return nil;
@@ -152,14 +130,10 @@
 #pragma mark -
 #pragma mark Source List Delegate Methods
 
-- (BOOL)sourceList:(PXSourceList*)aSourceList isGroupAlwaysExpanded:(id)group
+- (BOOL)sourceList:(PXSourceList*)aSourceList isGroupAlwaysExpanded:(id<SourceListItem>)group
 {
-	if([[group identifier] isEqualToString:@"library"])
-		return YES;
-	
-	return NO;
+	return [group.identifier isEqualToString:@"library"];
 }
-
 
 - (void)sourceListSelectionDidChange:(NSNotification *)notification
 {
@@ -177,7 +151,6 @@
 		[selectedItemLabel setStringValue:@"(none)"];
 	}
 }
-
 
 - (void)sourceListDeleteKeyPressedOnRows:(NSNotification *)notification
 {
