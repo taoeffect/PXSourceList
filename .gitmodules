@@ -1,0 +1,3 @@
+[submodule "TERecord"]
+	path = TERecord
+	url = git://github.com/taoeffect/TERecord.git
